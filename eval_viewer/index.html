@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>QuaggAI Evaluation Viewer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" href="data:," />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<header id="header">
+			<div class="header-row">
+				<div class="header-title">QuaggAI Evaluation Viewer</div>
+				<form id="manifest-form" class="manifest-form">
+					<label for="manifest-input">Manifest</label>
+					<input
+						id="manifest-input"
+						type="text"
+						placeholder="./output_vis/comparison_manifest.json"
+						autocomplete="off"
+					/>
+					<button type="submit">Load</button>
+				</form>
+			</div>
+			<div id="manifest-status" class="manifest-status"></div>
+		</header>
+
+		<main id="app"></main>
+
+		<script src="app.js"></script>
+	</body>
+</html>
