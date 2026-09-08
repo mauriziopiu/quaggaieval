@@ -1,0 +1,87 @@
+# batch_config.yaml
+# Configuration for the QuaggAI batch preprocessing pipeline.
+#
+# Run with:
+#   python batch_preprocess.py --config batch_config.yaml
+#
+# Pipeline order (steps run in this fixed sequence):
+#   1. png_to_mask     — alpha-channel PNG → binary mask PNG
+#   2. png_to_jpg      — baseline PNG → JPEG
+#   3. build_dataset   — match image/mask pairs, build structured dataset/
+#   4. split_dataset   — produce train.txt + val.txt
+#   5. convert_to_sa1b — convert to SA-1B JSON annotation format
+#   6. rename_to_sa1b  — rename files to numeric convention (sa_000001.*)
+
+# ── Global settings ─────────────────────────────────────────────────────────
+# These apply to every step unless overridden at the step level.
+global:
+    overwrite:
+        false # Skip files that already exist at the destination.
+        # Set to true to re-run steps and overwrite existing output.
+    dry_run: false # When true, no files are written — useful for a preview run.
+    log_level: INFO # Verbosity: DEBUG | INFO | WARNING
+
+# ── Path configuration ───────────────────────────────────────────────────────
+# All paths can be absolute or relative to the working directory.
+paths:
+    # Inputs (must exist before running)
+    input_alpha_masks: ./data/dataset_v3/_area_ALL # Source PNGs with alpha channel (Step 1 input)
+    input_baseline_imgs: ./data/dataset_v3/_cropped_ALL # Source baseline PNGs to convert (Step 2 input)
+
+    # Intermediate & final outputs (created automatically)
+    output_masks: ./output/preprocessing-2/tmp/masks # Step 1 output: binary mask PNGs
+    output_jpgs: ./output/preprocessing-2/tmp/jpgs # Step 2 output: baseline JPEGs
+    output_dataset: ./output/preprocessing-2/tmp/dataset # Steps 3+4 output: structured dataset with dataset.json
+    output_sa1b: ./output/preprocessing-2/ds_sa1b # Steps 5+6 output: SA-1B formatted dataset
+
+    # Optional: path to write a JSON report of unmatched image/mask pairs.
+    # Set to null to disable the report.
+    # unmatched_report: null
+    unmatched_report: ./output/preprocessing-2/unmatched_report.json
+
+# ── Step configuration ───────────────────────────────────────────────────────
+# Each step has an `enabled` flag. Set to false to skip that step.
+# Steps with overwrite/dry_run set to null inherit from global settings above.
+steps:
+    # Step 1 — Convert alpha-channel PNGs to binary masks
+    png_to_mask:
+        enabled: true
+        alpha_threshold: 128 # Pixels with alpha >= threshold are foreground (0–255)
+        suffix: '_mask' # Appended to output filename before the extension
+        recursive: false # Search input_alpha_masks recursively
+        overwrite: null # null = inherit global.overwrite
+
+    # Step 2 — Convert baseline PNGs to JPEG
+    png_to_jpg:
+        enabled: true
+        quality: 95 # JPEG quality (1–95)
+        overwrite: null
+
+    # Step 3 — Match image/mask pairs and build structured dataset folder
+    build_dataset:
+        enabled: true
+        overwrite: null # Controls file copy behaviour; manifest is always rewritten
+
+    # Step 4 — Shuffle stems and split into train/val sets
+    split_dataset:
+        enabled: true
+        split_ratio: 0.8 # Fraction assigned to train (0.0–1.0); remainder goes to val
+        seed: 42 # Random seed for reproducible splits
+        # Note: split_dataset always overwrites train.txt / val.txt;
+        # overwrite and dry_run are not applicable here.
+
+    # Step 5 — Convert dataset to SA-1B format (image + JSON annotation per pair)
+    convert_to_sa1b:
+        enabled: true
+        fg_threshold: 0 # Minimum pixel value to count as foreground (0–254)
+        copy_splits: true # Copy train.txt / val.txt into output_sa1b
+        overwrite: null
+        dry_run: null
+
+    # Step 6 — Rename files to SA-1B numeric convention (sa_000001.jpg / .json)
+    rename_to_sa1b:
+        enabled: true
+        prefix: 'sa_' # Prefix for renamed files (e.g. "sa_" → sa_000001.jpg)
+        dry_run: null
+        # Note: rename_to_sa1b always overwrites existing filenames in-place;
+        # overwrite is not applicable here.

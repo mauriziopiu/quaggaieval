@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quaggai-scripts"
+version = "0.1.0"
+description = "Dataset preprocessing, SAM2 fine-tuning, and evaluation scripts for quaggAIeval"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24.0",
+    "Pillow>=9.0.0",
+    "matplotlib>=3.7.0",
+    "scipy>=1.10.0",
+    "PyYAML>=6.0",
+    "setproctitle",
+    "pycocotools",
+    "torch>=2.0.0",
+    "sam2 @ git+https://github.com/mauriziopiu/sam2.git@quaggai-v1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.hatch.metadata]
+allow-direct-references = true  # needed for the pinned sam2 fork (git+https URL)
+
+[tool.hatch.build.targets.wheel]
+packages = ["quaggai_scripts"]
