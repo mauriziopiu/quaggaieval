@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quaggaieval-desktop"
+version = "0.1.0"
+description = "QuaggAIeval Desktop — SAM2-assisted segmentation, calibration, and coverage evaluation app"
+requires-python = ">=3.11"
+dependencies = [
+    "wxPython>=4.2.0",
+    "opencv-python>=4.8.0",
+    "numpy>=1.24.0",
+    "torch>=2.0.0",
+    "torchvision",
+    "omegaconf",
+    "hydra-core",
+    "sam2 @ git+https://github.com/mauriziopiu/sam2.git@quaggai-v1",
+]
+
+[project.optional-dependencies]
+packaging = ["pyinstaller"]
+dev = ["pytest", "ruff"]
+
+[tool.hatch.metadata]
+allow-direct-references = true  # needed for the pinned sam2 fork (git+https URL)
+
+[tool.hatch.build.targets.wheel]
+packages = ["quaggaieval_desktop"]
