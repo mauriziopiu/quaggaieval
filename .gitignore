@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Virtual environments (each subproject has its own)
+.venv/
+venv/
+venv_build/
+build_venv/
+env/
+
+# Packaging / build output
+build/
+dist/
+*.spec.bak
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Data, model weights, logs, run output — never committed here.
+# Small demo assets belong in examples/, not these.
+data/
+output/
+out/
+logs/
+checkpoints/
+models/
+*.pt
+*.pth
+
+# Local env files
+.env
+
+# Other (for now)
+.claude
+packaging/
