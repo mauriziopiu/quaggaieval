@@ -48,6 +48,8 @@ Both `scripts/` and `quaggaieval_desktop/` depend on a pinned SAM2 fork
 
 All source code is provided "as-is" under the GNU AGPLv3 License.
 
+Sample test images are provided under a separate, restricted license - see [`examples/NOTICE`](examples/NOTICE).
+
 ### Citing QuaggAIeval
 
 If you use the QuaggAIeval software or the underlying image segmentation model in your research, please cite this project in the following way:
@@ -55,3 +57,7 @@ If you use the QuaggAIeval software or the underlying image segmentation model i
 - Title: QuaggAIeval - Towards an Automated Coverage Evaluation of the Invasive Quagga Mussel using Benthic Imaging Systems
 - Authors: Maurizio Piu, Christoph Joachim Paulus, Thomas Müller, Alexandra Anh-Thu Weber, Piet Spaak
 - Year: 2026
+
+## Acknowledgement
+
+This project was created in collaboration with the [eawag quagga mussel competence center](https://www.eawag.ch/en/consulting/knowledge-and-technology-transfer/competence-center-quagga-mussel/) and in particular Alexandra Anh-Thu Weber, Thomas Müller and Piet Spaak.

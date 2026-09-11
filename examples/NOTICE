@@ -1,0 +1,20 @@
+# Restricted-Use Assets - Notice
+
+The image files in this directory (LC_2023_ME_S3_hit.png, LC_2024_MG_S4_Hit_raw.jpg, LC_2024_MG_S5_Hit_raw.jpg) are NOT covered by this repository's AGPLv3 license.
+
+These images were provided to the repository owner under a limited license from [eawag quagga mussel competence center](https://www.eawag.ch/en/consulting/knowledge-and-technology-transfer/competence-center-quagga-mussel/) for the sole purpose of demonstrating and testing this software. They are included here strictly under those terms.
+
+Permitted use:
+
+- Viewing and running these images as-is, to test or evaluate this
+  software.
+
+Not permitted, under any circumstances:
+
+- Redistribution, in original or modified form
+- Modification, editing, cropping, or derivative works
+- Use outside the context of testing this software
+- Commercial use
+
+All rights not expressly granted above are reserved by the original
+rights holder.
